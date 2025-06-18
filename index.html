@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Queue-It Playlist – Under Construction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Queue-It Playlist is coming soon! Collaborative playlists and music sharing, built for fun. Sign up for launch updates.">
+  <meta property="og:title" content="Queue-It Playlist – Under Construction">
+  <meta property="og:description" content="Collaborative playlists and music sharing, built for fun. Sign up to get notified when we launch!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3b5.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1ce2ae;
+      --accent: #f4a261;
+      --highlight: #e9c46a;
+      --error: #e76f51;
+      --white: #fff;
+      --black: #15192d;
+      --sora: 'Sora', 'Inter', Arial, sans-serif;
+      --inter: 'Inter', Arial, sans-serif;
+      --gradient: linear-gradient(90deg, #1ce2ae, #e9c46a 80%);
+    }
+    html, body {
+      min-height: 100vh;
+      font-family: var(--sora);
+      margin: 0;
+      padding: 0;
+      color: var(--white);
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(135deg, rgba(18,28,49,0.86) 40%, rgba(28,226,174,0.12) 100%),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat fixed;
+      transition: background 0.7s;
+    }
+    [data-theme="light"] body {
+      background: 
+        linear-gradient(135deg, rgba(255,255,255,0.93) 35%, rgba(44,225,174,0.09) 100%),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat fixed !important;
+      color: #181d2b;
+      transition: background 0.6s;
+    }
+    .top-cta {
+      background: var(--gradient);
+      color: #181d2b;
+      font-weight: 700;
+      font-family: var(--sora);
+      font-size: 1.08em;
+      padding: 0.55em 1.3em;
+      border-radius: 99em;
+      box-shadow: 0 2px 16px #1ce2ae21;
+      margin-top: 1.7em;
+      margin-bottom: 0.2em;
+      text-align: center;
+      letter-spacing: .02em;
+      display: inline-block;
+      border: none;
+    }
+    .container {
+      z-index: 2;
+      position: relative;
+      background: rgba(18, 28, 49, 0.78);
+      padding: 2.4rem 2.1rem 2.3rem 2.1rem;
+      border-radius: 2.1rem;
+      text-align: center;
+      box-shadow: 0 8px 40px #0c1a2d44;
+      max-width: 440px;
+      width: 96vw;
+      margin: 2rem 1vw 0.6rem 1vw;
+      backdrop-filter: blur(16px);
+      /* Removed border entirely for clean look */
+      transition: background 0.4s, color 0.3s;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    [data-theme="light"] .container {
+      background: rgba(255,255,255,0.96);
+      color: #181d2b;
+      box-shadow: 0 8px 32px #27e1c122;
+    }
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 3px 14px #1ce2ae45;
+      background: #fff;
+    }
+    .theme-toggle {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      background: rgba(28,226,174,0.16);
+      border: none;
+      color: var(--primary);
+      border-radius: 50%;
+      padding: 7px 13px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #1ce2ae13;
+      transition: background 0.28s, color 0.2s, transform 0.23s;
+      outline: none;
+      z-index: 2;
+    }
+    .theme-toggle:active { transform: scale(0.93);}
+    .theme-toggle:hover { background: var(--primary); color: var(--black);}
+    h1 {
+      font-size: 2.28rem;
+      margin-bottom: 1rem;
+      font-family: var(--sora);
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      background: linear-gradient(90deg,#1ce2ae 40%,#e9c46a 75%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      transition: background 0.28s, color 0.28s;
+      z-index: 1;
+      position: relative;
+    }
+    [data-theme="light"] h1 {
+      background: none;
+      -webkit-text-fill-color: #1c2b33;
+      color: #1c2b33;
+    }
+    .timer {
+      font-size: 1.13rem;
+      font-family: var(--inter);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      margin: 1.1rem 0 1.2rem 0;
+      color: var(--accent);
+      z-index: 1;
+      position: relative;
+    }
+    p {
+      font-size: 1.12rem;
+      margin-bottom: 1.1rem;
+      color: #f6f7f9;
+      line-height: 1.6;
+      font-family: var(--inter);
+      z-index: 1;
+      position: relative;
+      text-shadow: 0 2px 8px #10132a40;
+      transition: color 0.28s;
+    }
+    [data-theme="light"] p {
+      color: #181d2b;
+      text-shadow: none;
+    }
+    .newsletter {
+      margin: 1.2rem 0 0 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0;
+      z-index: 1;
+      position: relative;
+      align-items: center;
+    }
+    .newsletter input[type="email"] {
+      padding: 0.85rem 1rem;
+      width: 62%;
+      max-width: 200px;
+      border-radius: 22px 0 0 22px;
+      border: 2px solid transparent;
+      outline: none;
+      font-size: 1.07rem;
+      background: #e9ecef;
+      color: #1ce2ae;
+      font-family: var(--inter);
+      font-weight: 500;
+      margin-right: -2px;
+      transition: border-color 0.28s, background 0.28s, color 0.28s;
+      box-shadow: 0 2px 8px #27e1c120;
+    }
+    [data-theme="light"] .newsletter input[type="email"] {
+      background: #f4faf8;
+      color: #17a689;
+    }
+    .newsletter input[type="email"].valid {
+      border-color: #1ce2ae;
+      background: #e7fbee;
+      color: #181d2b;
+    }
+    .newsletter input[type="email"].invalid {
+      border-color: var(--error);
+      background: #fbeaea;
+      color: #181d2b;
+    }
+    .newsletter .icon-check, .newsletter .icon-error {
+      font-size: 1.3em;
+      margin-left: 0.4em;
+      vertical-align: middle;
+      transition: color 0.3s;
+    }
+    .newsletter .icon-check { color: #1ce2ae; display:none;}
+    .newsletter .icon-error { color: var(--error); display:none;}
+    .newsletter input[type="email"].valid ~ .icon-check {display: inline;}
+    .newsletter input[type="email"].invalid ~ .icon-error {display: inline;}
+    .newsletter button {
+      padding: 0.85rem 1.3rem;
+      border: none;
+      border-radius: 0 22px 22px 0;
+      font-size: 1.09rem;
+      font-weight: 700;
+      font-family: var(--inter);
+      background: var(--gradient);
+      color: #15192d;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.18s, transform 0.2s;
+      box-shadow: 0 2px 8px #27e1c128;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      position: relative;
+    }
+    .newsletter button:disabled { opacity: 0.7; cursor: wait;}
+    .newsletter button .spinner {
+      width: 20px; height: 20px;
+      border: 2.5px solid #fff3;
+      border-top: 2.5px solid #1ce2ae;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      margin-left: 0.5em;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg);}}
+    .newsletter button:hover:enabled {
+      background: linear-gradient(90deg,#e9c46a,#f4a261 90%);
+      color: #15192d;
+      box-shadow: 0 4px 20px #f4a26142;
+      transform: scale(1.03);
+    }
+    .newsletter button[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      top: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #232842e6;
+      color: #fff;
+      font-size: 0.98em;
+      padding: 6px 14px;
+      border-radius: 7px;
+      box-shadow: 0 2px 10px #0003;
+      white-space: nowrap;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.97;
+    }
+    .social {
+      margin: 2rem 0 0.3rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.1em;
+      z-index: 1;
+      position: relative;
+    }
+    .social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #1ce2ae;
+      background: #232842;
+      border-radius: 50%;
+      width: 2.4em;
+      height: 2.4em;
+      font-size: 1.32em;
+      transition: color 0.22s, background 0.22s, box-shadow 0.24s, transform 0.16s;
+      box-shadow: 0 1px 8px #1ce2ae21;
+      text-decoration: none;
+    }
+    [data-theme="light"] .social a {
+      background: #e9e9ee;
+      color: #1ce2ae;
+    }
+    .social a:hover {
+      background: #1ce2ae;
+      color: #232842;
+      box-shadow: 0 4px 14px #1ce2ae50;
+      transform: translateY(-3px) scale(1.13) rotate(-3deg);
+    }
+    .invite-section {
+      margin: 2.1em 0 1.1em 0;
+      background: rgba(255,255,255,0.07);
+      border-radius: 1.2em;
+      padding: 1em 1em 0.8em 1em;
+      color: #e9c46a;
+      font-size: 1.09em;
+      box-shadow: 0 1px 7px #e9c46a1c;
+    }
+    [data-theme="light"] .invite-section {
+      background: #fff8;
+      color: #2a9d8f;
+    }
+    .invite-link-box {
+      margin-top: 0.8em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #232842c2;
+      border-radius: 2em;
+      padding: 0.5em 1em;
+      font-size: 0.98em;
+      user-select: all;
+      letter-spacing: 0.04em;
+      gap: 0.5em;
+    }
+    [data-theme="light"] .invite-link-box {
+      background: #f4faf8e0;
+      color: #17a689;
+    }
+    .invite-link {
+      color: #1ce2ae;
+      font-family: var(--inter);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .invite-link:active { color: #e9c46a;}
+    .btn {
+      display: inline-block;
+      margin-top: 1.3em;
+      padding: 1em 2.6em;
+      background: linear-gradient(90deg,#e9c46a,#1ce2ae 90%);
+      color: #181d2b;
+      border: none;
+      border-radius: 28px;
+      font-weight: 700;
+      font-size: 1.08rem;
+      font-family: var(--sora);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.22s, color 0.2s, box-shadow 0.21s, transform 0.15s;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #27e1c124;
+      z-index: 1;
+      position: relative;
+    }
+    .btn:hover {
+      background: linear-gradient(90deg,#1ce2ae,#e9c46a 90%);
+      color: #0d2e1e;
+      box-shadow: 0 8px 30px #1ce2ae52;
+      transform: translateY(-2px) scale(1.035);
+    }
+    .toast {
+      display: none;
+      position: fixed;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg,#1ce2ae,#e9c46a 80%);
+      color: #15192d;
+      padding: 1em 2.2em;
+      border-radius: 26px;
+      box-shadow: 0 2px 18px #1ce2ae24;
+      font-size: 1.13rem;
+      font-family: var(--sora);
+      font-weight: 600;
+      z-index: 10000;
+      animation: toastin 0.7s cubic-bezier(.7,0,.4,1) both;
+    }
+    .toast.show { display: block;}
+    @keyframes toastin {
+      from { opacity: 0; transform: translate(-50%, 60px);}
+      to   { opacity: 1; transform: translate(-50%, 0);}
+    }
+    .footer {
+      color: #f4a261;
+      font-family: var(--inter);
+      font-size: 0.99em;
+      margin-bottom: 1em;
+      text-align: center;
+      letter-spacing: 0.01em;
+      z-index: 2;
+      position: relative;
+      opacity: 0.82;
+    }
+    [data-theme="light"] .footer {
+      color: #17a689;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: repeating-radial-gradient(circle at 10% 20%, #1ce2ae55 0 2px, transparent 4px 100%),
+                  repeating-radial-gradient(circle at 80% 60%, #e9c46a44 0 2.2px, transparent 4.2px 100%),
+                  repeating-radial-gradient(circle at 60% 30%, #fff2 0 1.8px, transparent 3.6px 100%);
+      animation: particlemove 12s linear infinite alternate;
+      opacity: 0.14;
+      mix-blend-mode: lighten;
+    }
+    @keyframes particlemove {
+      0% {background-position: 0 0, 0 0, 0 0;}
+      100% {background-position: 60px 80px, 100px 60px, -90px 40px;}
+    }
+    @media (max-width:600px) {
+      .container {
+        padding: 0.8em 2vw 1.3em 2vw;
+        max-width: 99vw;
+      }
+      h1 { font-size: 1.17rem; }
+      p, .timer { font-size: 0.99rem; }
+      .top-cta { font-size: 1rem; }
+      .btn { padding: 0.8em 1.2em; font-size: 0.98rem; }
+      .toast { padding: 0.7em 1.3em; font-size: 1rem; }
+      .invite-section { font-size: 0.95em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-cta">🎉 You’re early! Get QIt launch perks.</div>
+  <div class="container" id="main-container">
+
+    <button class="theme-toggle" id="theme-toggle" title="Switch theme" aria-label="Switch color theme">
+      <i class="fa fa-moon"></i>
+    </button>
+    <h1>QIt is Under Construction</h1>
+    <div class="timer" id="countdown" aria-live="polite">
+      Launching in: <span id="time"></span>
+    </div>
+    <p>
+      Your excitement is almost here!<br>
+      Sign up for updates and follow us on socials.<br>
+      <span style="font-size:0.97em;color:var(--highlight);">Be the first to party with QIt! 🎉</span>
+    </p>
+    <form class="newsletter" id="newsletter-form" autocomplete="off" aria-label="Get notified of launch">
+      <input type="email" id="newsletter-email" placeholder="Your email" aria-label="Email" required />
+      <span class="icon-check"><i class="fa fa-check-circle"></i></span>
+      <span class="icon-error"><i class="fa fa-exclamation-circle"></i></span>
+      <button type="submit" id="notify-btn" title="We respect your privacy. No spam."><i class="fa fa-paper-plane"></i> Notify Me</button>
+    </form>
+    <div class="invite-section">
+      🎁 Invite friends &amp; share the news!
+      <div class="invite-link-box">
+        <span id="invite-link">https://qitplaylist.com/invite/yourname</span>
+        <button class="invite-link" id="copy-link" title="Copy link" aria-label="Copy invite link"><i class="fa fa-copy"></i></button>
+      </div>
+    </div>
+    <div class="social" aria-label="Social media links">
+      <a href="https://twitter.com/" target="_blank" title="Twitter" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://facebook.com/" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:info@qit.com" title="Email" aria-label="Email"><i class="fa fa-envelope"></i></a>
+    </div>
+    <a href="/" class="btn" aria-label="Back to home">Back to Home</a>
+  </div>
+  <div class="footer">Made with ❤️ by QIt Team</div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    // Countdown logic
+    const launchDate = new Date('2025-07-20T12:00:00');
+    const countdownEl = document.getElementById('time');
+    function updateCountdown() {
+      const now = new Date();
+      const diff = launchDate - now;
+      if (diff <= 0) {
+        countdownEl.textContent = 'We are live!';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Newsletter: loader + fake submit + accessibility
+    const form = document.getElementById('newsletter-form');
+    const btn = document.getElementById('notify-btn');
+    const emailInput = document.getElementById('newsletter-email');
+    const iconCheck = document.querySelector('.icon-check');
+    const iconError = document.querySelector('.icon-error');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!emailInput.classList.contains('valid')) return;
+      btn.disabled = true;
+      btn.innerHTML = `<span>Sending</span><span class="spinner"></span>`;
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa fa-paper-plane"></i> Notify Me`;
+        showToast("Thanks! You'll be notified at " + emailInput.value);
+        emailInput.value = "";
+        emailInput.classList.remove("valid");
+        iconCheck.style.display = 'none';
+      }, 1600);
+    });
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+    // Instant email validation feedback
+    emailInput.addEventListener('input', function() {
+      const email = emailInput.value;
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailInput.classList.add("valid");
+        emailInput.classList.remove("invalid");
+        iconCheck.style.display = 'inline';
+        iconError.style.display = 'none';
+      } else if (email.length) {
+        emailInput.classList.remove("valid");
+        emailInput.classList.add("invalid");
+        iconCheck.style.display = 'none';
+        iconError.style.display = 'inline';
+      } else {
+        emailInput.classList.remove("valid", "invalid");
+        iconCheck.style.display = 'none';
+        iconError.style.display = 'none';
+      }
+    });
+    // Invite link copy
+    document.getElementById('copy-link').onclick = function() {
+      const link = document.getElementById('invite-link').innerText;
+      navigator.clipboard.writeText(link);
+      showToast("Invite link copied!");
+    };
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.onclick = function() {
+      const root = document.documentElement;
+      const isLight = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+      themeBtn.innerHTML = isLight
+        ? '<i class="fa fa-moon"></i>'
+        : '<i class="fa fa-sun"></i>';
+    }
+    document.documentElement.setAttribute('data-theme','dark');
+  </script>
+</body>
+</html>
